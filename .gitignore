@@ -1,0 +1,29 @@
+# ---------- Backend (Maven / Java) ----------
+backend/target/
+*.class
+*.jar
+!.mvn/wrapper/maven-wrapper.jar
+*.log
+.mvn/
+
+# Real credentials — never commit
+backend/src/main/resources/application-local.properties
+.env
+
+# ---------- Frontend (Node / Vite) ----------
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/npm-debug.log*
+frontend/nodejs/ 
+
+# ---------- IDE ----------
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# ---------- Misc ----------
+*.log
+.env
+.env.local

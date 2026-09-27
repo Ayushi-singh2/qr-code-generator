@@ -1,0 +1,132 @@
+/* ---------- Dashboard ---------- */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.qr-preview-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 380px;
+}
+
+/* ---------- History ---------- */
+.qr-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.qr-history-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  padding: 15px 17px;
+  transition: border-color 0.15s ease;
+}
+
+.qr-history-item:hover {
+  border-color: var(--color-line-strong);
+}
+
+.qr-history-thumb {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  border: 1px solid var(--color-line);
+  object-fit: contain;
+  background: #fff;
+  flex-shrink: 0;
+  padding: 4px;
+}
+
+.qr-history-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.qr-history-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.qr-history-content {
+  margin: 0;
+  color: var(--color-ink-soft);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.qr-history-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.qr-date {
+  color: var(--color-ink-soft);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+}
+
+@media (max-width: 640px) {
+  .qr-history-item {
+    flex-wrap: wrap;
+  }
+
+  .qr-history-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+/* ---------- Profile ---------- */
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.profile-static {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.profile-static > div {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.profile-label {
+  color: var(--color-text-muted);
+  font-weight: 600;
+}

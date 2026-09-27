@@ -1,0 +1,418 @@
+@import "./auth.css";
+@import "./dashboard.css";
+@import "./qr.css";
+
+:root {
+  /* Warm paper ground rather than a sterile grey \u2014 this is a workshop tool, not a dashboard */
+  --color-ink: #16151f;
+  --color-ink-soft: #55566a;
+  --color-paper: #f6f4ef;
+  --color-surface: #ffffff;
+  --color-line: #e4e1d6;
+  --color-line-strong: #cfccbe;
+
+  /* Deep indigo-plum, not the stock bootstrap-violet */
+  --color-accent: #362a7a;
+  --color-accent-dark: #241c56;
+  --color-accent-soft: #ece9fa;
+
+  --color-danger: #a8281f;
+  --color-danger-soft: #fbeae8;
+  --color-success: #1e6b3f;
+  --color-success-soft: #e9f5ee;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-sm: 0 1px 2px rgba(22, 21, 31, 0.06);
+  --shadow-md: 0 10px 30px rgba(22, 21, 31, 0.10);
+
+  --font-display: "Space Grotesk", "Inter", -apple-system, sans-serif;
+  --font-ui: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+
+  /* legacy aliases so existing components keep working without edits */
+  --color-primary: var(--color-accent);
+  --color-primary-dark: var(--color-accent-dark);
+  --color-primary-light: var(--color-accent-soft);
+  --color-text: var(--color-ink);
+  --color-text-muted: var(--color-ink-soft);
+  --color-border: var(--color-line);
+  --color-bg: var(--color-paper);
+  --color-card: var(--color-surface);
+  --radius: var(--radius-md);
+  --font-family: var(--font-ui);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-ui);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(circle, var(--color-line) 1px, transparent 1px) 0 0 / 22px 22px,
+    var(--color-paper);
+  background-attachment: fixed;
+}
+
+.app-main {
+  flex: 1;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 20px 72px;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 11px 20px;
+  font-family: var(--font-ui);
+  font-size: 0.93rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.05s ease, opacity 0.15s ease;
+  text-decoration: none;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-accent-dark);
+}
+
+.btn-secondary {
+  background: var(--color-surface);
+  color: var(--color-ink);
+  border: 1px solid var(--color-line-strong);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--color-paper);
+  border-color: var(--color-ink-soft);
+}
+
+.btn-danger {
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+  border: 1px solid #ecc6c1;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: #f6d9d5;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn-sm {
+  padding: 7px 14px;
+  font-size: 0.84rem;
+}
+
+/* ---------- Forms ---------- */
+.form-group {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.form-checkbox {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-checkbox input {
+  width: auto;
+}
+
+label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+select,
+textarea {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-family: var(--font-ui);
+  color: var(--color-ink);
+  background: var(--color-surface);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+
+input[aria-invalid="true"] {
+  border-color: var(--color-danger);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+}
+
+.field-error {
+  color: var(--color-danger);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.field-hint {
+  color: var(--color-ink-soft);
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+}
+
+/* ---------- Alerts ---------- */
+.alert {
+  padding: 13px 15px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  margin-bottom: 18px;
+  border-left: 3px solid transparent;
+}
+
+.alert-error {
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+  border-left-color: var(--color-danger);
+}
+
+.alert-success {
+  background: var(--color-success-soft);
+  color: var(--color-success);
+  border-left-color: var(--color-success);
+}
+
+/* ---------- Cards ---------- */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: 26px;
+}
+
+.card-title {
+  margin: 0 0 18px;
+  font-size: 1.05rem;
+  font-family: var(--font-display);
+}
+
+/* Generator panel gets a top accent bar instead of a generic shadow bump */
+.generator-card {
+  border-top: 3px solid var(--color-accent);
+  border-radius: 4px var(--radius-md) var(--radius-md) var(--radius-md);
+}
+
+/* ---------- Badge / data tag ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--color-accent-soft);
+  color: var(--color-accent-dark);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 4px;
+  border-left: 2px solid var(--color-accent);
+}
+
+/* ---------- Page layout ---------- */
+.page-header {
+  margin-bottom: 28px;
+}
+
+.page-header h1 {
+  margin: 0 0 6px;
+  font-size: 1.85rem;
+}
+
+.page-header p {
+  margin: 0;
+  color: var(--color-ink-soft);
+}
+
+/* ---------- Loading ---------- */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 60px 0;
+  color: var(--color-ink-soft);
+}
+
+.spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid var(--color-line);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- Empty state ---------- */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--color-ink-soft);
+}
+
+.empty-icon {
+  font-size: 2rem;
+  margin-bottom: 14px;
+  color: var(--color-ink-soft);
+  opacity: 0.45;
+}
+
+.empty-state h3 {
+  margin: 0 0 6px;
+  color: var(--color-ink);
+  font-family: var(--font-display);
+}
+
+/* ---------- Confirm inline ---------- */
+.confirm-inline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 640px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 1.6s;
+  }
+  .btn {
+    transition: none;
+  }
+}
+
+/* ---------- Footer ---------- */
+.app-footer {
+  border-top: 1px solid var(--color-line);
+  background: var(--color-surface);
+}
+
+.app-footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 20px 32px;
+  text-align: center;
+}
+
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-ink);
+  margin-bottom: 8px;
+}
+
+.footer-note {
+  margin: 0 0 10px;
+  color: var(--color-ink-soft);
+  font-size: 0.85rem;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footer-copy {
+  margin: 0;
+  color: var(--color-ink-soft);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}

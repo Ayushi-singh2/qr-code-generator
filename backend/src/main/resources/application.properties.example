@@ -1,0 +1,16 @@
+# Copy this file's values into application.properties (or, preferably, set them
+# as real environment variables DB_USERNAME / DB_PASSWORD) — never commit real
+# credentials to Git.
+
+spring.application.name=qr-generator
+
+spring.datasource.url=jdbc:mysql://localhost:3306/qr_generator_db?useSSL=false&serverTimezone=UTC
+spring.datasource.username=${DB_USERNAME:root}
+spring.datasource.password=${DB_PASSWORD:changeme}
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+
+server.port=8080

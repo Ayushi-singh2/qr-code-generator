@@ -1,0 +1,44 @@
+# Optional Docker setup. The app is still reachable on a single port: 8080.
+# Build & run with: docker compose up --build
+#
+# Note: this compose file expects a Dockerfile at backend/Dockerfile (see below)
+# that builds the full app (frontend + backend) into one image.
+
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: qr-generator-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: qr_generator_db
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-changeme}
+    ports:
+      - "3306:3306"
+    volumes:
+      - qr_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: qr-generator-app
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      DB_USERNAME: root
+      DB_PASSWORD: ${DB_ROOT_PASSWORD:-changeme}
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/qr_generator_db?useSSL=false&serverTimezone=UTC
+    ports:
+      - "8080:8080"
+
+volumes:
+  qr_mysql_data:
